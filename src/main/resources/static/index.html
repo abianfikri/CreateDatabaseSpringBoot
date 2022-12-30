@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Ws Consume</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        
+    </head>
+    <body>
+        <div>Data Test Sender</div>
+        <hr/>
+        
+        <script>
+            
+            const url = "http://localhost:8080/sendData";
+            
+            let dataText = {"id":"100","name":"Haris Setiawan","birthdate":"1969-03-12"}
+            let dataJson = JSON.stringify(dataText);
+            
+            function sendData() {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                })
+            }
+            
+        </script>
+        
+        <button onclick="sendData()">Send Data to Web Server</button>
+        
+    </body>
+</html>
