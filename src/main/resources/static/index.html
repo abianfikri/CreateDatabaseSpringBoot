@@ -20,12 +20,15 @@ and open the template in the editor.
         
         <script>
             
-            const url = "http://localhost:8080/sendData";
+            const url = "http://localhost:8080/POST";
             
-            let dataText = {"id":"100","name":"Haris Setiawan","birthdate":"1969-03-12"}
-            let dataJson = JSON.stringify(dataText);
-            
-            function sendData() {
+            function post() {
+                let editID = document.getElementById("id").value;
+                let name = document.getElementById("name").value;
+                let date = document.getElementById("birthdate").value;
+                let dataText = {"id":editID,"name":name,"birthdate":date}
+                let dataJson = JSON.stringify(dataText);
+                
                 $.ajax({
                     url: url,
                     method: 'POST',
@@ -38,9 +41,74 @@ and open the template in the editor.
                 })
             }
             
+            function put() {
+                
+                const urlp = "http://localhost:8080/PUT";
+                
+                let editID = document.getElementById("id").value;
+                let name = document.getElementById("name").value;
+                let date = document.getElementById("birthdate").value;
+                let dataText = {"id":editID,"name":name,"birthdate":date}
+                let dataJson = JSON.stringify(dataText);
+                
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                })
+            }
+            
+            function get(){
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                })
+            }
+            
+            function del() {
+                
+                let delID = document.getElementById("id").value;
+                let data = {"id":delID};
+                let dataJSON = JSON.stringify(data);
+                const urld = "http://localhost:8080/DEL";
+                
+                $.ajax({
+                    url: urld,
+                    method: 'DELETE',
+                    data: dataJSON,
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                })
+            }
+            
+            
         </script>
         
-        <button onclick="sendData()">Send Data to Web Server</button>
+        <input type="text" id="id" name="id"/>
+        <input type="text" id="name" name="name"/>
+        <input type="date" id="birthdate" name="birthdate"/>
+        
+        <hr/>
+        
+        <button onclick="get()">Get Data to Web Server</button> <br/>
+        <button onclick="post()">Send Data to Web Server</button> <br/>
+        <button onclick="put()">Edit Data to Web Server</button> <br/>
+        <button onclick="del()">Delete Data to Web Server</button>
+        
+        <hr/>
+        <div id="viewer"></div>
         
     </body>
 </html>
